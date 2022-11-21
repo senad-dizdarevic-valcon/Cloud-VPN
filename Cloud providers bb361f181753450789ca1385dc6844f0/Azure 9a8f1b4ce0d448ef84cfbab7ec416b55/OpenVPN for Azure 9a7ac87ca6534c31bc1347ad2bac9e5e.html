@@ -1,0 +1,687 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>OpenVPN for Azure</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="9a7ac87c-a653-4c31-bc13-47ad2bac9e5e" class="page sans"><header><div class="page-header-icon undefined"><img class="icon" src="OpenVPN%20for%20Azure%209a7ac87ca6534c31bc1347ad2bac9e5e/1569141.png"/></div><h1 class="page-title"><strong><strong>OpenVPN for Azure</strong></strong></h1></header><div class="page-body"><p id="cf1006b9-b4bc-4b5d-8686-fedd5268b730" class="">
+</p><p id="70e35f0a-3f9c-427d-8824-2dff7fd46f12" class="">ARM template for adding VM with a fully automated bootstrap script to create a VPN that automatically creates SSL certificates and allows easy management of users.</p><p id="565df9b7-19e4-4d7c-8e2d-aed9d45bce9d" class="">
+</p><hr id="5d210a02-acda-4187-bf83-0386d362aa7b"/><h3 id="7e1d56a8-d711-4eb9-9b7d-77f93823cded" class="">Resources used:</h3><ol type="1" id="87bb6d2f-b734-40f2-850e-4aa871b42fc7" class="numbered-list" start="1"><li>Resource groups</li></ol><ol type="1" id="bdd4660b-a62f-42eb-a739-6341e7e52d84" class="numbered-list" start="2"><li>Azure OpenVPN ARM template</li></ol><ol type="1" id="8354403a-b71c-4e1b-a2b0-55b043c1932f" class="numbered-list" start="3"><li>Edit VM Networking to create a user
+- Add inbound security rule for SSH port 22</li></ol><h3 id="95c1793a-8c5a-4a40-afd9-38a569686134" class="">Resources creation for VPN:</h3><ul id="02699bea-0cbf-4402-b947-8e498e7935cc" class="bulleted-list"><li style="list-style-type:disc">Resource group</li></ul><ul id="98f385d8-6eac-4cf6-b477-82dfc1dffa35" class="bulleted-list"><li style="list-style-type:disc">Virtual network</li></ul><ul id="7b2cdef6-7dd6-4fbe-b7d1-b29c782550fd" class="bulleted-list"><li style="list-style-type:disc">Network Interface</li></ul><ul id="e7da0157-f6f0-4a56-8964-4cff1d6d392c" class="bulleted-list"><li style="list-style-type:disc">Network security group</li></ul><ul id="92a3bdbe-a7c7-4b93-90bc-1467c4a86333" class="bulleted-list"><li style="list-style-type:disc">Virtual machine</li></ul><ul id="bac68e62-ce43-40db-848b-39b3828988f0" class="bulleted-list"><li style="list-style-type:disc">Public IP address</li></ul><ul id="05f468fd-b087-413e-be93-d6b6f8aa8b74" class="bulleted-list"><li style="list-style-type:disc">Disk</li></ul><p id="c1de3a84-2633-4287-b0d2-1670fef7bc42" class="">
+</p><figure id="82d1d67a-0c56-4687-aa0d-87f379e51114" class="link-to-page"><a href="OpenVPN%20for%20Azure%209a7ac87ca6534c31bc1347ad2bac9e5e/Azure%20OpenVPN%20ARM%20template%2082d1d67a0c564687aa0d87f379e51114.html"><img class="icon" src="OpenVPN%20for%20Azure%209a7ac87ca6534c31bc1347ad2bac9e5e/Azure%20OpenVPN%20ARM%20template%2082d1d67a0c564687aa0d87f379e51114/logo.png"/>Azure OpenVPN ARM template</a></figure><figure id="65ff1d6a-91dd-4a2d-b8b7-30cbccd8d437" class="link-to-page"><a href="OpenVPN%20for%20Azure%209a7ac87ca6534c31bc1347ad2bac9e5e/Azure%20OpenVPN%20bootstrap%20script%2065ff1d6a91dd4a2db8b730cbccd8d437.html"><img class="icon" src="OpenVPN%20for%20Azure%209a7ac87ca6534c31bc1347ad2bac9e5e/Azure%20OpenVPN%20bootstrap%20script%2065ff1d6a91dd4a2db8b730cbccd8d437/1569141.png"/>Azure OpenVPN bootstrap script</a></figure><p id="78bbc6fd-6878-452a-9d62-e04db8524733" class="">
+</p><figure id="4d906154-069a-47b1-9b8e-1e1a04b08ac8" class="image"><a href="OpenVPN%20for%20Azure%209a7ac87ca6534c31bc1347ad2bac9e5e/Pasted_image_20221121004547.png"><img style="width:1037px" src="OpenVPN%20for%20Azure%209a7ac87ca6534c31bc1347ad2bac9e5e/Pasted_image_20221121004547.png"/></a></figure><p id="6254eee3-5666-4b32-964d-b95d6605299c" class="">
+</p><h3 id="c989f543-613e-42d6-98d8-30c471215856" class="">Running ARM temp from Azure CLI</h3><ol type="1" id="f66aa16e-6048-4ae2-b0d5-744889415dad" class="numbered-list" start="1"><li>Log in to Azure<pre id="59509930-7710-4c4d-913b-1872dfcf8e64" class="code code-wrap"><code>az login</code></pre><p id="e0a26c4b-6166-4227-8f0a-7a0ff772c22e" class="">
+</p></li></ol><ol type="1" id="9ea5d460-ae31-4364-999a-e29f854a160d" class="numbered-list" start="2"><li>Set the right subscription<pre id="2be6234c-fd01-46dd-960e-a0f35deaf644" class="code code-wrap"><code>az account set --subscription &quot;your subscription id&quot;</code></pre><p id="8e8722ea-064d-4e48-a65e-4831950f1f22" class="">
+</p></li></ol><ol type="1" id="4be24af3-5ab0-4e5c-af14-304424eae9cf" class="numbered-list" start="3"><li>Create the Resource group<pre id="ed79a44f-6c78-4d52-9a43-ac194e15aadc" class="code code-wrap"><code>az account list-locations
+az group create --name &quot;resource-group&quot; --location &quot;your location&quot;</code></pre><p id="fc5598e0-161e-4afa-8f5d-b4b4b4817051" class="">
+</p></li></ol><ol type="1" id="71083603-b6fa-450f-8f09-4706e51cbad2" class="numbered-list" start="4"><li>Deploy the ARM template<pre id="26c287e6-d96f-4e23-ac89-d050eb2bf976" class="code code-wrap"><code>az group deployment create --name &quot;name of your deployment&quot; --resource-group &quot;resource-group&quot; --template-file &quot;./azuredeploy.json&quot;</code></pre><p id="89a92cb5-abd3-41ae-b427-835147dd20ee" class="">
+</p></li></ol><ol type="1" id="f206737a-ffce-4038-adf5-0441b4970e4a" class="numbered-list" start="5"><li>In Azure CLI fill in &quot;Linux OS Password&quot; parameter<ul id="27fb397f-b4bc-4efa-b467-2adb1105f29b" class="bulleted-list"><li style="list-style-type:disc">At least 12 characters</li></ul><ul id="dfc1fedd-8e07-42ec-91ff-326712e62303" class="bulleted-list"><li style="list-style-type:disc">A mixture of both uppercase and lowercase letters</li></ul><ul id="f158727a-e6ae-468c-a71b-faa27d4bc27d" class="bulleted-list"><li style="list-style-type:disc">A mixture of letters and numbers</li></ul></li></ol><ol type="1" id="51b29d0f-56d2-4f8b-8c9c-77aaeb7cf0da" class="numbered-list" start="6"><li>Open SSH port for menaging users<ul id="ff924729-f2ee-4975-888a-4f34b468ab12" class="bulleted-list"><li style="list-style-type:disc">Visit VM Netwark</li></ul><ul id="03ba08c3-b3a0-446c-8a46-0a529d5231e0" class="bulleted-list"><li style="list-style-type:disc">Enable SSH connection for the VM and after the menagment is over disable it.</li></ul><p id="3c28672f-521c-4247-8430-1c6948257177" class="">
+</p></li></ol><figure id="bb336929-e8c1-4e47-a1a8-a798467c0d65" class="image"><a href="OpenVPN%20for%20Azure%209a7ac87ca6534c31bc1347ad2bac9e5e/add_ssh_rule.png"><img style="width:2553px" src="OpenVPN%20for%20Azure%209a7ac87ca6534c31bc1347ad2bac9e5e/add_ssh_rule.png"/></a></figure><p id="c1a026d6-168a-4c53-a9e3-a9fc053deb10" class="">
+</p><ol type="1" id="f62528e8-f670-4f3f-8fa9-6967f7191bb1" class="numbered-list" start="7"><li>Create or remove a VPN user</li></ol><p id="fb41543c-18a8-455e-b741-f910bfff17c8" class="">Connect with SSH to the VM and use scripts to manage users.
+from /root folder and use:</p><p id="332432a5-20a2-409d-bf15-00d5df5ba00a" class="">Create user:</p><pre id="31c67378-e734-484c-9963-b61052b9063f" class="code code-wrap"><code>./create_vpn_user firstname-lastname</code></pre><p id="8e22443b-2c40-4e1d-ac4d-083f7f270109" class="">
+</p><p id="31078903-3175-4d9d-9390-a0fe5de2ad1d" class="">Remove user:</p><pre id="3ba2f200-0a64-4f32-a985-66daccdf713e" class="code code-wrap"><code>./revoke_vpn_user firstname-lastname</code></pre><p id="1fe8d1c9-a21b-4732-9b71-0232fd847b15" class="">Fix network issues:</p><p id="41694a9e-4911-4c86-8a45-f6109c02ef88" class="">
+</p><pre id="ccce2c25-4f7d-41b8-8295-5c723e8d95ad" class="code code-wrap"><code>./repair-net</code></pre><p id="4ed20334-7e18-4141-9974-8c3398a0c27b" class="">Check who is connected to the VPN</p><pre id="8be5eab2-1298-4a74-80e2-fefa5551f0f9" class="code code-wrap"><code>cat /var/log/openvpn/openvpn-status.log | sed &#x27;/ROUTING/q&#x27; | head -n -1</code></pre><p id="265935e7-41ae-4747-84fa-9c22365496b5" class="">
+</p><h3 id="c7e41932-db64-4075-9002-2cd97abb6de4" class=""><em><strong>After the user is created send the one-time link to the user</strong></em></h3><figure id="b1cb72c2-6056-4be1-af4d-9d033aaf08b9" class="image"><a href="OpenVPN%20for%20Azure%209a7ac87ca6534c31bc1347ad2bac9e5e/vpn_user.png"><img style="width:782px" src="OpenVPN%20for%20Azure%209a7ac87ca6534c31bc1347ad2bac9e5e/vpn_user.png"/></a></figure><p id="d0c2adf9-3d89-4393-9e79-ecdb005b3458" class="">
+</p><figure id="e4f15593-79d6-456b-8bcd-5cbbf4a6a7ec" class="image"><a href="OpenVPN%20for%20Azure%209a7ac87ca6534c31bc1347ad2bac9e5e/file_io.png"><img style="width:826px" src="OpenVPN%20for%20Azure%209a7ac87ca6534c31bc1347ad2bac9e5e/file_io.png"/></a></figure></div></article></body></html>
